@@ -15,7 +15,7 @@ def index(request):
 #view function to display a list of posts
 
 def post_list(request):
-    posts = Post.objects.all()
+    posts = Post.objects.order_by('-id').all()
     return render(request, 'post_list.html',{'posts':posts})
 
 
@@ -27,7 +27,7 @@ def post_detail(request, pk):
 #View function to display post by category
 def post_by_category(request, category_slug):
     category = get_object_or_404(Category, slug=category_slug)
-    posts = get_list_or_404(Post, category = category)
+    posts = get_list_or_404(Post.objects.order_by('-id') , category = category)
     context = {
         'category' : category,
         'posts' : posts
@@ -38,7 +38,7 @@ def post_by_category(request, category_slug):
 
 def post_by_tag(request, tag_slug):
     tag = get_object_or_404(Tag, slug = tag_slug)
-    posts = get_list_or_404(Post, tags = tag)
+    posts = get_list_or_404(Post.objects.order_by('-id'), tags = tag)
     context = {
         'tag' : tag,
         'posts' : posts
