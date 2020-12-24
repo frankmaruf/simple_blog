@@ -1,5 +1,5 @@
 # Create your views here.
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404, get_list_or_404
 from django.http import HttpResponse, HttpResponseNotFound,Http404
 from .models import Author, Tag, Category, Post
 import datetime
@@ -21,17 +21,13 @@ def post_list(request):
 
 # view function to display a single post
 def post_detail(request, pk):
-    try:
-        post = Post.objects.get(pk=pk)
-    except Post.DoesNotExist:
-        raise Http404("Post not found")
-
-    return render(request, 'post_detail.html', {'post': post})
+    post = get_object_or_404(Post, pk = pk)
+    return render(request,'post_detail.html',{'post': post})
 
 #View function to display post by category
 def post_by_category(request, category_slug):
-    category = Category.objects.get(slug=category_slug)
-    posts = Post.objects.filter(category__slug = category_slug)
+    category = get_object_or_404(Category, slug=category_slug)
+    posts = get_list_or_404(Post, category = category)
     context = {
         'category' : category,
         'posts' : posts
@@ -41,8 +37,8 @@ def post_by_category(request, category_slug):
 #view function to display post by tag
 
 def post_by_tag(request, tag_slug):
-    tag = Tag.objects.get(slug=tag_slug)
-    posts = Post.objects.filter(tags__name=tag)
+    tag = get_object_or_404(Tag, slug = tag_slug)
+    posts = get_list_or_404(Post, tags = tag)
     context = {
         'tag' : tag,
         'posts' : posts
