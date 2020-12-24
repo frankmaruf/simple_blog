@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Home_Page</title>
+</head>
+<body>
+{% include 'nav.html' %}
+{# This is a comment #}
+{% comment %}
+This is a comment expanding to
+multiple lines.
+{% endcomment %}
+<h1>Welcome to Geeks.</h1>
+<h3>My First Name is {{ First_name|length }}</h3>
+<br/>
+<h4>My First Name is {{ Last_name }}</h4>
+
+<p>Data is {{ data }}</p>
+<h4>List is</h4>
+<ul>
+    {% for i in list %}
+    <li>{{ i }}</li>
+    {% endfor %}
+</ul>
+
+{% if count < 10 %}
+    <p>Print this para</p>
+{% elif count < 20 %}
+    <p>Otherwise print this</p>
+{% elif count < 30 %}
+    <p>Let's try this</p>
+{% else %}
+    <p>Okay everything failed print this now</p>
+{% endif %}
+{% for x,y in List %}
+<p>{{ x }}:{{ y }}</p>
+{% endfor %}
+
+{% comment %}
+This is for dict
+{% endcomment %}
+{% for k,v in dict.items %}
+    <p>{{ k }}:{{ v }}</p>
+{% endfor %}
+</body>
+</html>

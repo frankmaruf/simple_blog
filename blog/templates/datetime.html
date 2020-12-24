@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% block title %}
+    Title from child template
+{% endblock %}
+
+{% block content %}
+
+    {% if now %}
+        <p>Current date and time is {{ now }}</p>
+    {% else %}
+        <p>now variable is not available</p>
+    {% endif %}
+
+    <p>Current scheme: {{ request.scheme }}</p>
+
+{% endblock %}
+{% block footer %}
+    {{ block.super }}
+    <p>All Rights reserved</p>
+{% endblock %}
