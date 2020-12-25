@@ -19,5 +19,6 @@ from django_project import views
 
 urlpatterns = [
     path('admin', admin.site.urls),
+    path('cadmin/',include('cadmin.urls')),
     path('', include('blog.urls')),
 ]

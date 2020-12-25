@@ -44,7 +44,7 @@ class Tag(models.Model):
 
 class Post(models.Model):
     title = models.CharField(max_length=200)
-    slug = models.SlugField(unique=True, help_text='Slug will be generated automatically from the title of the post')
+    slug = models.SlugField(unique=True,help_text="Slug will be generated automatically from the title of the post")
     content = models.TextField()
     publication_date = models.DateTimeField(auto_now_add=True)
     author = models.ForeignKey(Author,on_delete=models.CASCADE)
@@ -55,13 +55,8 @@ class Post(models.Model):
         return self.title
 
     def save(self, *args, **kwargs):
-        if not self.id:
-            self.slug = slugify(self.title)#or whatever you want the slug to use
-            super(Post, self).save(*args,**kwargs) #Only set the slug when the object is created.
-
-  #  def save(self, *args, **kwargs):
-   #     self.slug = slugify(self.title)
-    #    super(Post, self).save(*args, **kwargs)
+        self.slug = slugify(self.title)
+        super(Post, self).save(*args, **kwargs)
 
     def get_absolute_url(self):
         return reverse('post_detail', args=[self.pk])
