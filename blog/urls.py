@@ -8,4 +8,5 @@ urlpatterns = [
  #   path('<pk>/', views.post_detail, name='post_detail'),
     path('category/<category_slug>', views.post_by_category, name='post_by_category'),
     path('tag/<tag_slug>', views.post_by_tag, name='post_by_tag'),
+    path('blog/', views.test_redirect, name = 'test_redirect'),
 ]

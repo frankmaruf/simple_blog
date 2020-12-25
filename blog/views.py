@@ -1,7 +1,8 @@
 # Create your views here.
-from django.shortcuts import render, get_object_or_404, get_list_or_404
+from django.shortcuts import render, get_object_or_404, get_list_or_404, reverse
 from django.http import HttpResponse, HttpResponseNotFound,Http404
 from .models import Author, Tag, Category, Post
+from django.http import HttpResponse, HttpResponseNotFound, Http404,HttpResponseRedirect
 import datetime
 from django import template
 from django.template import loader
@@ -44,3 +45,6 @@ def post_by_tag(request, tag_slug):
         'posts' : posts
     }
     return render(request,'post_by_tag.html',context)
+
+def test_redirect(request):
+    return HttpResponseRedirect(reverse('post_list'))
