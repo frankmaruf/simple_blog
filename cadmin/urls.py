@@ -3,4 +3,5 @@ from . import views
 
 urlpatterns = [
     path('post/add/', views.post_add, name ='post_add'),
+    path('post/update/<pk>/',views.post_update, name='post_update'),
 ]
