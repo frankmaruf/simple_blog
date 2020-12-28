@@ -6,6 +6,9 @@ from django.http import HttpResponse, HttpResponseNotFound, Http404,HttpResponse
 import datetime
 from django import template
 from django.template import loader
+from .forms import Feedback
+from django.contrib import messages
+from .forms import FeedbackForm
 
 
 
@@ -48,3 +51,14 @@ def post_by_tag(request, tag_slug):
 
 def test_redirect(request):
     return redirect('post_list', permanent=True)
+
+def feedback(request):
+    if request.method == 'POST':
+        f = FeedbackForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.add_message(request,messages.INFO,'Feedback Submitted.')
+            return redirect('feedback')
+    else:
+        f = FeedbackForm()
+    return render(request,'feedback.html',{'form':f})
