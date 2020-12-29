@@ -9,6 +9,7 @@ from django.template import loader
 from .forms import Feedback
 from django.contrib import messages
 from .forms import FeedbackForm
+from django.core.mail import mail_admins
 
 
 
@@ -55,10 +56,18 @@ def test_redirect(request):
 def feedback(request):
     if request.method == 'POST':
         f = FeedbackForm(request.POST)
+
         if f.is_valid():
+            name = f.cleaned_data['name']
+            sender = f.cleaned_data['email']
+            subject = "You have a new Feedback from {}:{}".format(name, sender)
+            message = "Subject: {}\n\nMessage: {}".format(f.cleaned_data['subject'], f.cleaned_data['message'])
+            mail_admins(subject, message)
+
             f.save()
-            messages.add_message(request,messages.INFO,'Feedback Submitted.')
+            messages.add_message(request, messages.INFO, 'Feedback Submitted.')
             return redirect('feedback')
+
     else:
         f = FeedbackForm()
-    return render(request,'feedback.html',{'form':f})
+    return render(request, 'feedback.html', {'form': f})
