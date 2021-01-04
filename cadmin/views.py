@@ -2,6 +2,10 @@ from django.shortcuts import render, redirect, get_object_or_404, reverse
 from blog.forms import  PostForm
 from django.contrib import messages
 from blog.models import Post, Author, Category, Tag
+from django.contrib.auth.models import User
+from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth import login
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -26,7 +30,7 @@ def post_add(request):
     # if request is GET the show unbound form to the user
     else:
         f = PostForm()
-    return render(request, 'post_add.html', {'form': f})
+    return render(request, 'cadmin/post_add.html', {'form': f})
 
 def post_update(request, pk):
     post = get_object_or_404(Post, pk=pk)
@@ -49,5 +53,19 @@ def post_update(request, pk):
     else:
         f = PostForm(instance=post)
 
-    return render(request, 'post_update.html', {'form': f, 'post': post})
+    return render(request, 'cadmin/post_update.html', {'form': f, 'post': post})
 
+@login_required
+def home(request):
+    return render(request,'cadmin/admin_page.html')
+
+def sign_up(request):
+    context = {}
+    form = UserCreationForm(request.POST or None)
+    if request.method == "POST":
+        if form.is_valid():
+            user = form.save()
+            login(request,user)
+            return render(request,'cadmin/admin_page.html')
+    context['form']=form
+    return render(request,'cadmin/sign_up.html',context)

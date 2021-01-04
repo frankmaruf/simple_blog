@@ -12,6 +12,7 @@ from .forms import FeedbackForm
 from django.core.mail import mail_admins
 from django.core.paginator import Paginator, PageNotAnInteger,EmptyPage
 from django_project import helpers
+from django.contrib import auth
 
 
 
@@ -72,7 +73,6 @@ def feedback(request):
             f.save()
             messages.add_message(request, messages.INFO, 'Feedback Submitted.')
             return redirect('feedback')
-
     else:
         f = FeedbackForm()
     return render(request, 'feedback.html', {'form': f})
@@ -171,3 +171,34 @@ def lousy_logout(request):
     except KeyError:
         return redirect('lousy_login')
     return render(request, 'lousy_logout.html')
+
+def login(request):
+    if request.user.is_authenticated():
+        return redirect('admin_page')
+
+    if request.method == 'POST':
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+        user = auth.authenticate(username=username, password=password)
+
+        if user is not None:
+            # correct username and password login the user
+            auth.login(request, user)
+            return redirect('admin_page')
+
+        else:
+            messages.error(request, 'Error wrong username/password')
+
+    return render(request, 'login.html')
+
+
+def logout(request):
+    auth.logout(request)
+    return render(request,'logout.html')
+
+
+def admin_page(request):
+    if not request.user.is_authenticated():
+        return redirect('blog_login')
+
+    return render(request, 'admin_page.html')
