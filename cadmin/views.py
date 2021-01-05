@@ -8,6 +8,7 @@ from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
 from django.contrib import messages
 from django.contrib.auth.forms import UserCreationForm
+from .forms import CustomUserCreationForm
 
 # Create your views here.
 
@@ -63,11 +64,11 @@ def home(request):
 
 def register(request):
     if request.method == 'POST':
-        f = UserCreationForm(request.POST)
+        f = CustomUserCreationForm(request.POST)
         if f.is_valid():
             f.save()
             messages.success(request,'Account created successfully')
             return redirect('register')
     else:
-        f = UserCreationForm()
+        f = CustomUserCreationForm()
     return render(request,'cadmin/register.html',{'form':f})
