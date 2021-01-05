@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import login
 from django.contrib.auth.decorators import login_required
+from django.contrib import messages
+from django.contrib.auth.forms import UserCreationForm
 
 # Create your views here.
 
@@ -59,13 +61,13 @@ def post_update(request, pk):
 def home(request):
     return render(request,'cadmin/admin_page.html')
 
-def sign_up(request):
-    context = {}
-    form = UserCreationForm(request.POST or None)
-    if request.method == "POST":
-        if form.is_valid():
-            user = form.save()
-            login(request,user)
-            return render(request,'cadmin/admin_page.html')
-    context['form']=form
-    return render(request,'cadmin/sign_up.html',context)
+def register(request):
+    if request.method == 'POST':
+        f = UserCreationForm(request.POST)
+        if f.is_valid():
+            f.save()
+            messages.success(request,'Account created successfully')
+            return redirect('register')
+    else:
+        f = UserCreationForm()
+    return render(request,'cadmin/register.html',{'form':f})
