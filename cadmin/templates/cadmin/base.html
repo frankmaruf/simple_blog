@@ -4,6 +4,11 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}The Great Django Blog :: Admin Panel{% endblock %}</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans">
+    {% load static %}
+    <link rel="stylesheet" href="{% static 'cadmin/css/reset.css' %}">
+    <link rel="stylesheet" href="{% static 'cadmin/css/style.css' %}">
+    <script src="{% static 'cadmin/js/jquery.js' %}"></script>
 </head>
 <body>
 

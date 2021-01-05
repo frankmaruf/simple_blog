@@ -1,18 +1,20 @@
 from django.db import models
 from django.template.defaultfilters import slugify
 from django.urls import reverse
+from django.contrib.auth.models import User
 # Create your models here.
 
 
 class Author(models.Model):
-    name = models.CharField(max_length=50, unique=True, verbose_name='Auhor Name')
-    email = models.EmailField(unique=True)
-    active = models.BooleanField(default=False)
-    created_on = models.DateTimeField(auto_now_add=True)
-    last_logged_in = models.DateTimeField(auto_now=True)
+    # required to associate Author model with User model (Important)
+    user = models.OneToOneField(User, null=True, blank=True,on_delete=models.CASCADE)
+
+    # additional fields
+    activation_key = models.CharField(max_length=255, default=1)
+    email_validated = models.BooleanField(default=False)
 
     def __str__(self):
-        return self.name + " : " + self.email
+        return self.user.username
 
 
 class Category(models.Model):
