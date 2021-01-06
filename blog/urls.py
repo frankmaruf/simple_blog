@@ -2,8 +2,17 @@ from django.urls import path
 from django.conf.urls import url
 from . import views
 from django.contrib.flatpages import views as flat_views
+from django.contrib.sitemaps.views import sitemap
+from .sitemaps import PostSitemap
+
+sitemaps = {
+    'posts': PostSitemap
+}
 
 urlpatterns = [
+    # the sitemap
+    path('sitemap.xml/', sitemap, {'sitemaps' : sitemaps },
+         name='django.contrib.sitemaps.views.sitemap'),
     path('about/',flat_views.flatpage,{'url':'/about/'},name='about'),
     path('eula/',flat_views.flatpage,{'url':'/eula/'},name = 'eula'),
     path('login/',views.login,name = 'blog_login'),
