@@ -1,8 +1,11 @@
 from django.urls import path
 from django.conf.urls import url
 from . import views
+from django.contrib.flatpages import views as flat_views
 
 urlpatterns = [
+    path('about/',flat_views.flatpage,{'url':'/about/'},name='about'),
+    path('eula/',flat_views.flatpage,{'url':'/eula/'},name = 'eula'),
     path('login/',views.login,name = 'blog_login'),
     path('logout/',views.logout,name = 'blog_logout'),
     path('admin_page/',views.admin_page,name = 'admin_page'),
