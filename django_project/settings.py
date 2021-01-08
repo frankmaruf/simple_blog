@@ -137,17 +137,17 @@ MEDIA_URL = '/media/'
 
 # Email settings
 
-SERVER_EMAIL = 'mdakashbigboss@gmail.com'
+SERVER_EMAIL = 'YourServerMail@gmail.com'
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_PASSWORD = 'Loveislife'
-EMAIL_HOST_USER = 'mdakashbigboss@gmail.com'
+EMAIL_HOST_PASSWORD = 'YourMailPassword'
+EMAIL_HOST_USER = 'YourMailAddress@gmail.com'
 EMAIL_PORT = 587
 EMAIL_USE_TLS = True
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
 
 ADMINS = [
-    ('Maruf', 'mdakashbigboss@gmail.com'),
+    ('Admin', 'adminMail@gmail.com'),
 ]
 
 MANAGERS = ADMINS
